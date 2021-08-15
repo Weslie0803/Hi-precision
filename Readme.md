@@ -1,9 +1,11 @@
-# Head file for class of Hprecision to do High-precision calculation
+# Head file for class of Hprec to do High-precision calculation
 
 ## Storing
 
 This class use vector of short as storage. Conveniently we store the number in reverse.
+
 For example: number 123 in storage is 3 2 1.
+
 Another reverse will be done at the time of outputing
 
 ## Output

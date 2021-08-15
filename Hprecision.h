@@ -22,6 +22,7 @@ class Hprec{
     friend std::ostream & operator<<(std::ostream & out, Hprec & _hp);
 
     void operator+=(Hprec & _hp);
+    void operator+=(int num);
     Hprec operator+(Hprec & _hp);
     
     ~Hprec(){}
@@ -56,9 +57,15 @@ void Hprec::operator+=(Hprec & _hp){
         it2 ++;
     }
 }
+void Hprec::operator+=(int num){
+    Hprec _hp(num);
+    this->operator+=(_hp);
+}
 
 Hprec Hprec::operator+(Hprec & _hp){
     Hprec hp = *this;
     hp += _hp;
     return hp;
 }
+
+

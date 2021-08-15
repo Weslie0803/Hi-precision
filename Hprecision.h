@@ -91,7 +91,7 @@ Hprec Hprec::operator*(Hprec & _hp){
     for(auto i = 0; i < _hp._storage.size() ; i++){
         for(auto it = _storage.begin(); it != _storage.end(); it++){
             Hprec tmp;
-            for(int j = 0; j < i; j++){
+            for(int j = 0; j <= i; j++){
                 tmp._storage.push_back(0);
             }
             auto tmp_it = --tmp._storage.end();

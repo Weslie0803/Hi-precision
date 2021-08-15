@@ -24,6 +24,7 @@ class Hprec{
     void operator+=(Hprec & _hp);
     void operator+=(int num);
     Hprec operator+(Hprec & _hp);
+    Hprec operator+(int num);
     
     ~Hprec(){}
 };
@@ -66,6 +67,10 @@ Hprec Hprec::operator+(Hprec & _hp){
     Hprec hp = *this;
     hp += _hp;
     return hp;
+}
+Hprec Hprec::operator+(int num){
+    Hprec _hp(num);
+    return this->operator+(_hp);
 }
 
 

@@ -21,7 +21,8 @@ class Hprec{
     }
     friend std::ostream & operator<<(std::ostream & out, Hprec & _hp);
 
-    void operator+=(Hprec _hp);
+    void operator+=(Hprec & _hp);
+    void operator+(Hprec & _hp);
     
     ~Hprec(){}
 };
@@ -31,7 +32,7 @@ std::ostream &  operator<<(std::ostream & out, Hprec & _hp){
     return out;
 }
 
-void Hprec::operator+=(Hprec _hp){
+void Hprec::operator+=(Hprec & _hp){
     auto it1 = this->_storage.begin();
     auto it2 = _hp._storage.begin();
     while(it2 != _hp._storage.end()){

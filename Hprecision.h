@@ -48,27 +48,42 @@ std::ostream &  operator<<(std::ostream & out, Hprec & _hp){
 }
 
 void Hprec::operator+=(Hprec & _hp){
-    auto it1 = this->_storage.begin();
+    int i = 0;
     auto it2 = _hp._storage.begin();
     while(it2 != _hp._storage.end()){
-        if(it1 == _storage.end()){
+        if(i == _storage.size()){
             _storage.push_back(*it2);
+            it2 ++;
+            i ++;
         }
         else{
-            *it1 += *it2;
-            if(*it1 >= 10){
-                auto tmp = *it1 / 10;
-                if(++it1 == _storage.end()){
-                    _storage.push_back(*(--it1) / 10);
-                    *it1 = *it1 % 10; 
+            _storage[i] += *it2;
+            if(_storage[i] >= 10){
+                auto tmp = _storage[i] / 10;
+                if((i+1) == _storage.size()){
+                    _storage.push_back(_storage[i] / 10);
+                    _storage[i] = _storage[i] % 10; 
                 }
                 else{
-                    *(it1--) += tmp;
+                    _storage[i] = _storage[i] % 10;
+                    _storage[i+1] += tmp;
                 }
             }
+            i++;
+            it2++;
         }
-        it1 ++;
-        it2 ++;
+    }
+    for(int i = 0; i < this->_storage.size(); i++){
+        if(_storage[i] >= 10){
+            if(i == this->_storage.size() - 1){
+                _storage.push_back(_storage[i] / 10);
+                _storage[i] %= 10;
+            }
+            else{
+                _storage[i+1] += (_storage[i] / 10);
+                _storage[i] %= 10;
+            }
+        }
     }
 }
 void Hprec::operator+=(int num){
@@ -87,7 +102,7 @@ Hprec Hprec::operator+(int num){
 }
 
 Hprec Hprec::operator*(Hprec & _hp){
-    Hprec dest;
+    Hprec dest = 0;
     for(auto i = 0; i < _hp._storage.size() ; i++){
         for(auto it = _storage.begin(); it != _storage.end(); it++){
             Hprec tmp;
@@ -95,8 +110,15 @@ Hprec Hprec::operator*(Hprec & _hp){
                 tmp._storage.push_back(0);
             }
             auto tmp_it = --tmp._storage.end();
-            *tmp_it += (*it * _hp._storage[i]) % 10;
-            tmp._storage.push_back((*it * _hp._storage[i]) / 10);
+            *tmp_it += *it * _hp._storage[i];
+            if(*tmp_it > 10){
+                tmp._storage.push_back((*tmp_it) / 10);
+                tmp_it = --tmp._storage.end();
+                tmp_it--;
+                *tmp_it = *tmp_it % 10;
+            }
+            dest += tmp;
         }
     }
+    return dest;
 }

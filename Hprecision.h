@@ -138,3 +138,13 @@ Hprec Hprec::operator*(Hprec & _hp){
     }
     return dest;
 }
+Hprec Hprec::operator*(int num){
+    Hprec tmp(num);
+    return (*this * tmp);
+}
+void Hprec::operator*=(Hprec & _hp){
+    *this = *this * _hp;
+}
+void Hprec::operator*=(int num){
+    *this = *this * num;
+}

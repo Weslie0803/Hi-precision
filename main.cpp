@@ -8,5 +8,8 @@ int main(){
     Hprec lp = 15;
     Hprec mul = lp * hp;
     std::cout << mul << std::endl;
+
+    std::cin >> lp >> hp;
+    std::cout << lp << hp << std::endl;
     return 0;
 }

@@ -30,6 +30,7 @@ class Hprec{
         }
     }
     friend std::ostream & operator<<(std::ostream & out, Hprec & _hp);
+    friend std::istream & operator>>(std::istream & in , Hprec & _hp);
 
     void operator+=(Hprec & _hp);   //all += & + based on this function
     void operator+=(int num);
@@ -43,10 +44,16 @@ class Hprec{
     ~Hprec(){}
 };
 
-std::ostream &  operator<<(std::ostream & out, Hprec & _hp){
+std::ostream & operator<<(std::ostream & out, Hprec & _hp){
     _hp.output();
     return out;
 }
+std::istream & operator>>(std::istream & in , Hprec & _hp){
+    int tmp;
+    in >> tmp;
+    _hp = tmp;
+    return in;
+} 
 
 void Hprec::operator+=(Hprec & _hp){
     int i = 0;

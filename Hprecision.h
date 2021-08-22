@@ -5,6 +5,7 @@
 class Hprec{
     std::vector<short> _storage;    //for storing
     bool positive;  //true when positive
+    void auto_check();
     public:
     Hprec(){}
     Hprec(int res){
@@ -57,7 +58,7 @@ void Hprec::operator+=(Hprec & _hp){
             i ++;
         }
         else{
-            _storage[i] += *it2;
+            _storage[i] += *it2;/*
             if(_storage[i] >= 10){
                 auto tmp = _storage[i] / 10;
                 if((i+1) == _storage.size()){
@@ -68,11 +69,15 @@ void Hprec::operator+=(Hprec & _hp){
                     _storage[i] = _storage[i] % 10;
                     _storage[i+1] += tmp;
                 }
-            }
+            }*/
             i++;
             it2++;
         }
     }
+    this->auto_check();
+}
+
+void Hprec::auto_check(){
     for(int i = 0; i < this->_storage.size(); i++){
         if(_storage[i] >= 10){
             if(i == this->_storage.size() - 1){
@@ -86,6 +91,7 @@ void Hprec::operator+=(Hprec & _hp){
         }
     }
 }
+
 void Hprec::operator+=(int num){
     Hprec _hp(num);
     this->operator+=(_hp);
@@ -104,21 +110,24 @@ Hprec Hprec::operator+(int num){
 Hprec Hprec::operator*(Hprec & _hp){
     Hprec dest = 0;
     for(auto i = 0; i < _hp._storage.size() ; i++){
+        Hprec tmp;
+        for(int j = 0; j < i; j++){
+            tmp._storage.push_back(0);
+        }
+        auto tmp_it = --tmp._storage.end();
         for(auto it = _storage.begin(); it != _storage.end(); it++){
-            Hprec tmp;
-            for(int j = 0; j <= i; j++){
-                tmp._storage.push_back(0);
-            }
-            auto tmp_it = --tmp._storage.end();
-            *tmp_it += *it * _hp._storage[i];
-            if(*tmp_it > 10){
+            tmp._storage.push_back(0);
+            tmp_it = --tmp._storage.end();
+            *tmp_it += *it * _hp._storage[i];/*
+            if(*tmp_it >= 10){
                 tmp._storage.push_back((*tmp_it) / 10);
                 tmp_it = --tmp._storage.end();
                 tmp_it--;
                 *tmp_it = *tmp_it % 10;
-            }
-            dest += tmp;
+            }*/
         }
+        tmp.auto_check();
+        dest += tmp;
     }
     return dest;
 }
